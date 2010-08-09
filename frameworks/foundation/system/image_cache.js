@@ -216,17 +216,19 @@ SC.imageCache = SC.Object.create(/** @scope SC.imageCache.prototype */ {
     if (entry) {
       // var img = (entry.image = new Image()) ;
       var img = entry.image ;
-      img.onabort = this._imageDidAbort ;
-      img.onerror = this._imageDidError ;
-      img.onload = this._imageDidLoad ;
-      img.src = entry.url ;
+      if (img) {
+        img.onabort = this._imageDidAbort ;
+        img.onerror = this._imageDidError ;
+        img.onload = this._imageDidLoad ;
+        img.src = entry.url ;
 
-      // add to loading queue.
-      this._loading.push(entry) ;
-    
-      // increment active requests and start next request until queue is empty
-      // or until load limit is reached.
-      this.incrementProperty('activeRequests');
+	      // add to loading queue.
+        this._loading.push(entry) ;
+	    
+	      // increment active requests and start next request until queue is empty
+	      // or until load limit is reached.
+        this.incrementProperty('activeRequests');
+      }
       this.loadNextImage();
     } 
   },
